@@ -55,7 +55,7 @@ ${message}
   };
 
   return (
-    <div className="bg-gradient-to-br from-white to-green-100 py-16">
+    <div id ="contact" className="bg-gradient-to-br from-white to-green-100 py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center text-green-700 mb-12">
           Contact Us

@@ -28,7 +28,7 @@ function About() {
   }, []);
 
   return (
-    <div className="bg-gray-100 py-16">
+    <div id = "about" className="bg-gray-100 py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">About Us</h2>
         <div className="md:flex md:items-center md:justify-between">
@@ -37,7 +37,7 @@ function About() {
               <img
                 src={images[currentImageIndex]}
                 alt={`About Us - Image ${currentImageIndex + 1}`}
-                className="w-full h-auto"
+                className="w-full h-full object-cover"
               />
               <button
                 onClick={prevImage}

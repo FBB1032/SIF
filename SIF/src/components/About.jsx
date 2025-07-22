@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 const images = [
-  './src/assets/images/about/pic.avif',
-  './src/assets/images/about/3.jpg',
-  '../assets/images/about/image3.jpeg',
+  './src/assets/images/about/001.jpg',
+  './src/assets/images/about/002.jpg',
+  './src/assets/images/about/003.jpg',
+  './src/assets/images/about/004.jpg',
 ];
 
 function About() {

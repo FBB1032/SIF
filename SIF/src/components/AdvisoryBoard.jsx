@@ -6,7 +6,7 @@ const advisoryBoardMembers = [
     id: 1,
     name: 'Sani Musa Ibrahim',
     title: 'CHAIRMAN', // Title re-added
-    image: './src/assets/images/AdvisoryBoard/aisha_bello.jpg', // **Update path**
+    image: '/assets/images/advisory/sani.jpg', // **Update path**
   },
   {
     id: 2,

@@ -34,7 +34,7 @@ function Footer() {
             <ul className="list-none p-0 text-sm text-gray-400">
               <li className="mb-1"><a href="/" className="hover:text-white">Home</a></li>
               <li className="mb-1"><a href="/about" className="hover:text-white">About</a></li>
-              <li className="mb-1"><a href="/services" className="hover:text-white">Services</a></li>
+              <li className="mb-1"><a href="/services" className="hover:text-white">Our Mission and Vision</a></li>
               <li className="mb-1"><a href="/team" className="hover:text-white">Team</a></li>
               <li className="mb-1"><a href="/exco" className="hover:text-white">EXCO</a></li>
             
@@ -42,7 +42,7 @@ function Footer() {
           </div>
 
           <div className="footer-links">
-            <h4 className="text-lg font-semibold mb-2">Our Services</h4>
+            <h4 className="text-lg font-semibold mb-2">Our Mission Vision and Vision </h4>
             <ul className="list-none p-0 text-sm text-gray-400">
               <li className="mb-1"><a href="#" className="hover:text-white">Community Impact Projects</a></li>
               <li className="mb-1"><a href="#" className="hover:text-white">Public Speaking</a></li>

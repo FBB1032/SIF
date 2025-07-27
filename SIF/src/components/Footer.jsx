@@ -66,9 +66,14 @@ function Footer() {
 
       <div className="container mx-auto px-4 mt-8 text-center text-sm text-gray-500">
         <p>© {new Date().getFullYear()} SIF. All Rights Reserved.</p>
-        <p> Design By Fahd Badamasi</p>
+        
         
       </div>
+      <div className="mt-6 pt-4 border-t border-gray-700"> {/* Added top border for separation */}
+          <p className="text-xs text-gray-400">
+            Design by <span className="font-semibold text-sif-light-green">Fahd Badamasi</span>
+          </p>
+        </div>
     </footer>
   );
 }

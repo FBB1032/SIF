@@ -48,7 +48,7 @@ const advisoryBoardMembers = [
     id: 8,
     name: 'ABDULMALIK HALIMA MUSA',
     title: 'MEMBER', // Title updated
-    image: 'https://via.placeholder.com/150/C0C0C0/FFFFFF?text=YB', // Placeholder image
+    image: 'assets/images/advisory/halima.jpg', // Placeholder image
   },
   {
     id: 9,
@@ -60,7 +60,7 @@ const advisoryBoardMembers = [
     id: 10,
     name: 'AISHA HUMAIRAH BASHIR',
     title: 'MEMBER', // Title updated
-    image: 'https://via.placeholder.com/150/E0E0E0/FFFFFF?text=TG', // Placeholder image
+    image: 'assets/images/advisory/humi.jpg', // Placeholder image
   },
 ];
 

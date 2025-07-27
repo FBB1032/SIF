@@ -18,7 +18,7 @@ const excoMembers = [
     id: 3,
     name: 'Abdulmuhamin Siyaka',
     title: 'Technical Lead',
-    image: 'https://via.placeholder.com/150', // Replace with actual image URL
+    image: '/assets/images/Excos/siyaka.jpg', // Replace with actual image URL
   },
   {
     id: 4,

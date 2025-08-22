@@ -124,7 +124,7 @@ Phone: ${phone}
                 </>
               ) : (
                 <>
-                  <Send className="w-5 h-5" /> {/* Send icon */}
+                  <Send className="w-5 h-5" /> 
                   Submit Info
                 </>
               )}

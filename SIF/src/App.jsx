@@ -7,7 +7,7 @@ import Team from './components/Team';
 import AdvisoryBoard from './components/AdvisoryBoard';
 import EXCO from './components/EXCO';
 import Contact from './components/Contact';
-/import Membership from './components/Membership';
+import Membership from './components/Membership';
 import Footer from './components/Footer';
 
 function App() {

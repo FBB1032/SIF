@@ -14,8 +14,7 @@ function Navbar() {
   };
 
   return (
-    // Add sticky, top-0, and z-50 to the nav element
-    <nav className="bg-gray-800 text-white py-4 shadow-md sticky top-0 z-50 w-full"> {/* ADDED CLASSES HERE */}
+    <nav className="bg-gray-800 text-white py-4 shadow-md sticky top-0 z-50 w-full">
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo and SIF text */}
         <a href="/" className="flex items-center flex-shrink-0" onClick={closeMobileMenu}>
@@ -41,7 +40,6 @@ function Navbar() {
           <a href="#patron" className="hover:text-gray-300 transition duration-200" onClick={closeMobileMenu}>Patron</a>
           <a href="#exco" className="hover:text-gray-300 transition duration-200" onClick={closeMobileMenu}>EXCO</a>
           <a href="#contact" className="hover:text-gray-300 transition duration-200" onClick={closeMobileMenu}>Contact</a>
-          <a href="#membership" className="hover:text-gray-300 transition duration-200" onClick={closeMobileMenu}>Membership</a>
         </div>
       </div>
 
@@ -53,7 +51,6 @@ function Navbar() {
           <a href="#patron" className="block w-full text-center py-2 text-white hover:bg-gray-600 rounded" onClick={closeMobileMenu}>Patron</a>
           <a href="#exco" className="block w-full text-center py-2 text-white hover:bg-gray-600 rounded" onClick={closeMobileMenu}>EXCO</a>
           <a href="#contact" className="block w-full text-center py-2 text-white hover:bg-gray-600 rounded" onClick={closeMobileMenu}>Contact</a>
-          <a href="#membership" className="block w-full text-center py-2 text-white hover:bg-gray-600 rounded" onClick={closeMobileMenu}>Membership</a>
         </div>
       )}
     </nav>

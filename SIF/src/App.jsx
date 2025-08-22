@@ -11,7 +11,8 @@ function App() {
       <About />
       <EXCO />
       <Contact />
-      {/* Removed Membership Registration Form */}
+      <Membership />
+      <Footer />
     </div>
   );
 }

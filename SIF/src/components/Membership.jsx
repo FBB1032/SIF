@@ -93,7 +93,7 @@ Phone: ${phone}
                 required
               />
             </div>
-            <button
+      <button
               type="submit"
               className="bg-green-600 text-white py-3 px-6 rounded-full hover:bg-green-700 focus:outline-none focus:shadow-outline w-full flex items-center justify-center gap-2" // Added flex classes
               disabled={isSubmitting} // Disable button during submission
@@ -124,11 +124,11 @@ Phone: ${phone}
                 </>
               ) : (
                 <>
-                  <Send className="w-5 h-5" /> {/* Send icon */}
+                  <Send className="w-5 h-5" /> 
                   Submit Info
                 </>
               )}
-            </button>
+            </button> 
           </form>
 
           {/* Submission message display */}

@@ -3,7 +3,7 @@ import Countdown from './Countdown'; // Adjust path if needed
 
 function Hero() {
   // Set the target date for the next SIF event, competition, or deadline
-  const eventDate = '2025-08-09T09:00:00'; // Example: May 15, 2025, 6:00 PM (WAT - your current timezone)
+  const eventDate = '2026-08-09T09:00:00'; // Example: May 15, 2025, 6:00 PM (WAT - your current timezone)
 
   const heroStyles = {
     backgroundColor: '#00BF63', // Forest Green

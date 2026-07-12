@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 // Define the target date and time for the event
 // August 23rd, 2025, 9:00 AM WAT (GMT+0100)
-const EVENT_TARGET_DATE = "August 23, 2025 09:00:00 GMT+0100";
+const EVENT_TARGET_DATE = "August 23, 2026 09:00:00 GMT+0100";
 
-function Countdown() {
+function Countdown({ targetDate }) {
+  const finalTarget = targetDate || EVENT_TARGET_DATE;
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [eventStarted, setEventStarted] = useState(false);
 
@@ -30,11 +31,11 @@ function Countdown() {
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, [finalTarget]); // Run effect when finalTarget changes
 
   function calculateTimeLeft() {
     const now = new Date();
-    const target = new Date(EVENT_TARGET_DATE);
+    const target = new Date(finalTarget);
     const difference = target.getTime() - now.getTime(); // Difference in milliseconds
 
     if (difference <= 0) {

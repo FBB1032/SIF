@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'sif-green': {
+          DEFAULT: '#00BF63',
+          400: '#39E78F',
+        },
+        'sif-light-green': '#58E8A3',
+      },
+    },
   },
   plugins: [],
 }

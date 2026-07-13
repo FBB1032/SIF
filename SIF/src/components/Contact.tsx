@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Send, Phone, Mail } from 'lucide-react'; // Import Send icon
 import { Label } from './label';
 
-const Contact = () => {
+const Contact = ({ showBanner = false }: { showBanner?: boolean }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
@@ -11,11 +11,11 @@ const Contact = () => {
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   // **IMPORTANT**: Replace with the actual WhatsApp number you want contact messages to go to.
-  const contactWhatsAppNumber = '+2348144733943'; // Your provided number (example)
+  const contactWhatsAppNumber = '+2348160489887'; // Your provided number (example)
 
   // For display only
   const contactEmail = 'studentsinteractiveforum@gmail.com';
-  const displayPhoneNumber = '+2348144733943';
+  const displayPhoneNumber = '08160489887';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Contact = () => {
 
     try {
       const whatsappMessageBody = `
-New Contact Request!
+Queries, partnerships, or feedback!
 Name: ${name}
 Phone Number: ${phoneNumber}
 Message:
@@ -55,11 +55,25 @@ ${message}
   };
 
   return (
-    <div id ="contact" className="bg-gradient-to-br from-white to-green-100 py-16">
+    <div id="contact" className="bg-gradient-to-br from-white to-green-100 pb-16">
+      {showBanner ? (
+        <div className="bg-green-700 text-white py-16 text-center mb-16">
+          <div className="container mx-auto px-4">
+            <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+            <p className="text-lg text-green-100 max-w-2xl mx-auto">
+              Get in touch with us for queries, partnerships, or feedback.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="container mx-auto px-4 pt-16">
+          <h2 className="text-4xl font-bold text-center text-green-700 mb-12">
+            Contact Us
+          </h2>
+        </div>
+      )}
+
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-green-700 mb-12">
-          Contact Us
-        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Contact Form */}
@@ -117,7 +131,7 @@ ${message}
                 className="w-full bg-gradient-to-r from-green-500 to-green-700 text-white py-3 rounded-full
                           hover:from-green-600 hover:to-green-800 transition-all duration-300
                           flex items-center justify-center gap-2"
-              disabled={isSubmitting}
+                disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
@@ -145,7 +159,7 @@ ${message}
                   </>
                 ) : (
                   <>
-                    <Send className="w-5 h-5" /> {}
+                    <Send className="w-5 h-5" /> { }
                     Send
                   </>
                 )}

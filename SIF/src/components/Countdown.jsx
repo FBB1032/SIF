@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // Define the target date and time for the event
 // August 23rd, 2025, 9:00 AM WAT (GMT+0100)
-const EVENT_TARGET_DATE = "August 23, 2026 09:00:00 GMT+0100";
+const EVENT_TARGET_DATE = "August 22, 2026 09:00:00 GMT+0100";
 
 function Countdown({ targetDate }) {
   const finalTarget = targetDate || EVENT_TARGET_DATE;

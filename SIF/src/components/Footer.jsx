@@ -1,79 +1,84 @@
 import React from 'react';
 import { FaTwitter, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'; // Import social media icons
 
-function Footer() {
+function Footer({ setActiveTab }) {
+  const handleLink = (tab) => (e) => {
+    e.preventDefault();
+    if (setActiveTab) {
+      setActiveTab(tab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <footer id="footer" className="bg-gray-800 text-white py-8">
+    <footer id="footer" className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="footer-info">
-            <a href="./src/assets/images/logo.jpg" className="logo text-lg font-bold">
-              SIF {/* Replace with your actual logo or text */}
-            </a>
-            <p className="mt-2 text-sm text-gray-400">
-              The Student Interactive Forum (SIF), established in 2023, is a student-led platform dedicated to fostering critical thinking, open dialogue, and social impact. It offers forums, workshops, and community projects to empower students as thoughtful leaders. SIF continues to grow as a space for meaningful interaction and positive change.
+          <div className="footer-info text-left">
+            <button onClick={handleLink('home')} className="logo text-lg font-bold text-green-500 focus:outline-none mb-3 block">
+              STUDENTS INTERACTIVE FORUM
+            </button>
+            <p className="mt-2 text-sm text-gray-400 leading-relaxed">
+              The Student Interactive Forum (SIF), established in 2023, is a student-led platform dedicated to fostering critical thinking, open dialogue, and social impact. SIF continues to grow as a space for meaningful interaction and positive change.
             </p>
-            <div className="social-links flex mt-4 space-x-4">
-              <a href="https://x.com/sif_ng/status/1942116585407201377?s=46" className="text-gray-400 hover:text-blue-300">
+            <div className="social-links flex mt-6 space-x-4">
+              <a href="https://x.com/sif_ng/status/1942116585407201377?s=46" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-green-500 transition">
                 <FaTwitter size={20} />
               </a>
-              <a href="https://www.facebook.com/share/p/1GM3AE1fNh/?mibextid=wwXIfr" className="text-gray-400 hover:text-blue-600">
+              <a href="https://www.facebook.com/share/p/1GM3AE1fNh/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-green-500 transition">
                 <FaFacebook size={20} />
               </a>
-              <a href="https://www.instagram.com/p/DLzDHE-C0gp/?igsh=MXdzY2ZtcmY3ajYwdA==" className="text-gray-400 hover:text-pink-500">
+              <a href="https://www.instagram.com/p/DLzDHE-C0gp/?igsh=MXdzY2ZtcmY3ajYwdA==" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-green-500 transition">
                 <FaInstagram size={20} />
               </a>
-              <a href="https://www.linkedin.com/posts/student-interactive-forum-sif-abu-zaria-9ab969319_youthineconomy-policyandinnovation-leadership-activity-7347885137893691392-4nIR?utm_medium=ios_app&rcm=ACoAAEJhnI4BuFd4vUAPEmMba3sN_wu097wuv1s&utm_source=social_share_send&utm_campaign=copy_link" className="text-gray-400 hover:text-blue-500">
+              <a href="https://www.linkedin.com/posts/student-interactive-forum-sif-abu-zaria-9ab969319_youthineconomy-policyandinnovation-leadership-activity-7347885137893691392-4nIR?utm_medium=ios_app&rcm=ACoAAEJhnI4BuFd4vUAPEmMba3sN_wu097wuv1s&utm_source=social_share_send&utm_campaign=copy_link" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-green-500 transition">
                 <FaLinkedin size={20} />
               </a>
             </div>
           </div>
 
-          <div className="footer-links">
-            <h4 className="text-lg font-semibold mb-2">Useful Links</h4>
-            <ul className="list-none p-0 text-sm text-gray-400">
-              <li className="mb-1"><a href="/" className="hover:text-white">Home</a></li>
-              <li className="mb-1"><a href="/about" className="hover:text-white">About</a></li>
-              <li className="mb-1"><a href="/services" className="hover:text-white">Our Mission and Vision</a></li>
-              <li className="mb-1"><a href="/team" className="hover:text-white">Team</a></li>
-              <li className="mb-1"><a href="/exco" className="hover:text-white">EXCO</a></li>
-            
+          <div className="footer-links text-left">
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2 text-green-500">Quick Links</h4>
+            <ul className="list-none p-0 text-sm text-gray-400 space-y-2.5">
+              <li><a href="#" onClick={handleLink('home')} className="hover:text-white transition">Home</a></li>
+              <li><a href="#" onClick={handleLink('about')} className="hover:text-white transition">About SIF</a></li>
+              <li><a href="#" onClick={handleLink('summit')} className="hover:text-white transition">SIF Summit</a></li>
+              <li><a href="#" onClick={handleLink('speakers')} className="hover:text-white transition">Summit Speakers</a></li>
+              <li><a href="#" onClick={handleLink('advisory')} className="hover:text-white transition">Advisory Board</a></li>
+              <li><a href="#" onClick={handleLink('past-summits')} className="hover:text-white transition">Past Summits</a></li>
+              <li><a href="#" onClick={handleLink('contact')} className="hover:text-white transition">Contact Us</a></li>
             </ul>
           </div>
 
-          <div className="footer-links">
-            <h4 className="text-lg font-semibold mb-2">Our Mission Vision and Vision </h4>
-            <ul className="list-none p-0 text-sm text-gray-400">
-              <li className="mb-1"><a href="#" className="hover:text-white">Community Impact Projects</a></li>
-              <li className="mb-1"><a href="#" className="hover:text-white">Public Speaking</a></li>
-              <li className="mb-1"><a href="#" className="hover:text-white">Skill-Building Workshops</a></li>
-              <li><a href="#" className="hover:text-white">Interactive Discussion Forums</a></li>
+          <div className="footer-links text-left">
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2 text-green-500">Core Summit Pillars</h4>
+            <ul className="list-none p-0 text-sm text-gray-400 space-y-2.5">
+              <li>Interactive Forums</li>
+              <li>Skill-Building Workshops</li>
+              <li>Networking & Dialogue</li>
+              <li>Community Impact Projects</li>
             </ul>
           </div>
 
-          <div className="footer-contact text-center md:text-left">
-            <h4 className="text-lg font-semibold mb-2">Contact Us</h4>
-            <p className="text-sm text-gray-400">
-              Ahmadu bello university (ABU) <br />
-              Zaria,Kaduna State <br />
-              Nigeria <br /><br />
-              <strong>Phone:</strong> +2348144733943<br />
+          <div className="footer-contact text-left">
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-800 pb-2 text-green-500">Get in Touch</h4>
+            <p className="text-sm text-gray-400 space-y-2">
+              <strong>Location:</strong><br />
+              Ahmadu Bello University (ABU), Zaria<br />
+              Kaduna State, Nigeria <br /><br />
               <strong>Email:</strong> studentsinteractiveforum@gmail.com<br />
+              <strong>Phone:</strong> 08160489887<br />
             </p>
           </div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 mt-8 text-center text-sm text-gray-500">
-        <p>© {new Date().getFullYear()} SIF. All Rights Reserved.</p>
-        
-        
-      </div>
-      <div className="mt-6 pt-4 border-t border-gray-700"> {/* Added top border for separation */}
-          <p className="text-xs text-gray-400">
-            Design by <span className="font-semibold text-sif-light-green">Fahd Badamasi</span>
+        <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-4">
+          <p>© {new Date().getFullYear()} Students Interactive Forum (SIF). All Rights Reserved.</p>
+          <p className="text-xs">
+            Design by <span className="font-semibold text-green-500">Fahd Badamasi</span>
           </p>
         </div>
+      </div>
     </footer>
   );
 }

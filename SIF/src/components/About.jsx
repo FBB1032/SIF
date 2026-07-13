@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
 const images = [
-  '/assets/images/about/001.jpg',
-  '/assets/images/about/002.jpg',
-  '/assets/images/about/003.jpg',
-  '/assets/images/about/004.jpg',
+  '/assets/images/about/001.jpeg',
+  '/assets/images/about/002.jpeg',
+  '/assets/images/about/003.jpeg',
+  '/assets/images/about/004.jpeg',
+  '/assets/images/about/005.jpeg',
+  '/assets/images/about/006.jpeg',
+  '/assets/images/about/007.jpeg',
+  '/assets/images/about/008.jpeg',
+  '/assets/images/about/009.jpeg',
+  '/assets/images/about/010.jpeg',
+  '/assets/images/about/011.jpeg',
+  '/assets/images/about/012.jpeg',
+  '/assets/images/about/013.jpeg',
+  '/assets/images/about/014.jpeg',
+  '/assets/images/about/015.jpeg',
+  '/assets/images/about/016.jpeg'
+
 ];
 
-function About() {
+function About({ onReadMore }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
@@ -28,7 +41,7 @@ function About() {
   }, []);
 
   return (
-    <div id = "about" className="bg-gray-100 py-16">
+    <div id="about" className="bg-gray-100 py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">About Us</h2>
         <div className="md:flex md:items-center md:justify-between">
@@ -55,18 +68,28 @@ function About() {
           </div>
           <div className="md:w-1/2 md:ml-8">
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            The Student Interactive Forum (SIF) was established in 2023 with a mission to cultivate a vibrant, inclusive community of students passionate about critical thinking, engaging dialogue, and positive change. SIF was founded on the belief that meaningful conversations and collaborative learning are essential for personal growth and societal progress.
-SIF serves as a dynamic platform where students from diverse backgrounds come together to exchange ideas, challenge perspectives, and engage in constructive discussions on a wide range of topics—from academic interests to global issues. 
+              The Student Interactive Forum (SIF) was established in 2023 with a mission to cultivate a vibrant, inclusive community of students passionate about critical thinking, engaging dialogue, and positive change. SIF was founded on the belief that meaningful conversations and collaborative learning are essential for personal growth and societal progress.
+              SIF serves as a dynamic platform where students from diverse backgrounds come together to exchange ideas, challenge perspectives, and engage in constructive discussions on a wide range of topics—from academic interests to global issues.
 
 
             </p>
             <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            Through debates, discussion panels, reading circles, workshops, and community engagement programs, we strive to enhance intellectual curiosity, promote respectful dialogue, and empower students to become socially responsible leaders. Our activities are designed to sharpen analytical thinking, foster empathy, and encourage students to explore diverse perspectives on contemporary issues.
-            
+              Through debates, discussion panels, reading circles, workshops, and community engagement programs, we strive to enhance intellectual curiosity, promote respectful dialogue, and empower students to become socially responsible leaders. Our activities are designed to sharpen analytical thinking, foster empathy, and encourage students to explore diverse perspectives on contemporary issues.
+
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-            Join us as we continue to grow as a hub for meaningful conversations, lifelong learning, and student-led impact, shaping a future where informed voices lead the way toward a better society.
+              Join us as we continue to grow as a hub for meaningful conversations, lifelong learning, and student-led impact, shaping a future where informed voices lead the way toward a better society.
             </p>
+            {onReadMore && (
+              <div className="mt-6">
+                <button
+                  onClick={onReadMore}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-6 rounded transition duration-200 shadow-sm"
+                >
+                  Read More
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

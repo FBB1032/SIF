@@ -4,30 +4,36 @@ import React from 'react';
 const excoMembers = [
   {
     id: 1,
-    name: 'Abubakar Muhammad ABBA',
+    name: 'Muhammad Bello Anka',
     title: 'Team Lead',
-    image: '/assets/images/Excos/lead.jpg', // Replace with actual image URL
+    image: '/assets/images/Excos/Anka.jpeg', // Replace with actual image URL
   },
   {
     id: 2,
-    name: 'Muhammad Bello Anka',
-    title: 'Communications Lead',
-    image: '/assets/images/Excos/Anka.jpg', // Replace with actual image URL
-  },
-  {
-    id: 3,
     name: 'Abdulmuhamin Siyaka',
-    title: 'Technical Lead',
+    title: 'Admin Lead',
     image: '/assets/images/Excos/siyaka.jpg', // Replace with actual image URL
   },
   {
+    id: 3,
+    name: 'Rahmatullah Abdullahi Omehi',
+    title: 'Communications Lead',
+    image: '/assets/images/Excos/Ramatu.jpeg', // Replace with actual image URL
+  },
+  {
     id: 4,
-    name: 'Amina Ahmed',
-    title: 'Treasurer',
-    image: '/assets/images/Excos/Tresurer.jpg', // Replace with actual image URL
+    name: 'Fahd Badamasi',
+    title: 'Technical Lead',
+    image: '/assets/images/Excos/Fahd.jpeg', // Replace with actual image URL
   },
   {
     id: 5,
+    name: 'Hauwa Abdulmumin',
+    title: 'Treasurer',
+    image: '/assets/images/Excos/Hauwa.jpeg', // Replace with actual image URL
+  },
+  {
+    id: 6,
     name: 'Muhammad Junaid',
     title: 'Financial Secretary', // Example of changing a title
     image: '/assets/images/Excos/junaid.jpg', // Replace with actual image URL

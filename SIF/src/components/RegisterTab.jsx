@@ -161,6 +161,11 @@ function RegisterTab() {
                     placeholder="+234..."
                     required
                   />
+                  <div className="mt-2 rounded-md border border-red-200 bg-red-50 px-3 py-2">
+                    <p className="text-sm font-semibold text-red-600">
+                      Please register with your WhatsApp number.
+                    </p>
+                  </div>
                 </div>
                 <div>
                   <label htmlFor="attendance" className="block text-gray-700 text-sm font-bold mb-2">Attendance Type</label>

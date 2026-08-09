@@ -65,7 +65,7 @@ function RegistrationsSubView() {
 
   const handleDirectOpenWhatsAppChat = async (reg) => {
     const cleanedPhone = reg.phone.replace(/[^0-9]/g, '');
-    const message = `Hello ${reg.name},\n\nThis is the Students' Interactive Forum (SIF) Admin.\n\nWe are pleased to confirm that your registration for the Students' Interactive Summit 2.0 has been approved!\n\nPlease click the link below to join our official WhatsApp announcement group to receive further updates:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0&amv=3\n\nWe look forward to seeing you there!`;
+    const message = `Hello ${reg.name},\n\nThis is the Students' Interactive Forum (SIF) Admin.\n\nWe are pleased to confirm that your registration for the Students' Interactive Summit 2.0 has been approved!\n\nPlease click the link below to join our official WhatsApp announcement group to receive further updates:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
     const encoded = encodeURIComponent(message);
     const whatsappLink = `https://wa.me/${cleanedPhone}?text=${encoded}`;
     

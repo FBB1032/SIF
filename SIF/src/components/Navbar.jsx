@@ -17,7 +17,7 @@ function Navbar({ activeTab, setActiveTab }) {
     { label: 'Home', id: 'home' },
     { label: 'About', id: 'about' },
     { label: 'Summit', id: 'summit' },
-    { label: 'Speakers', id: 'speakers' },
+    /**{ label: 'Speakers', id: 'speakers' },**/
     { label: 'Advisory Board', id: 'advisory' },
     { label: 'Past Summits', id: 'past-summits' },
     { label: 'Contact', id: 'contact' },

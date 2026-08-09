@@ -126,7 +126,7 @@ def admin_add_registration(registration: schemas.RegistrationAdminCreate, db: Se
         phone=registration.phone,
         dept=registration.dept,
         level=registration.level,
-        attendance="In-Person",  # Admin added defaults to In-Person
+        attendance=registration.attendance,
         gender=registration.gender,
         whatsapp=registration.whatsapp,
         reason=registration.reason,
@@ -171,6 +171,8 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
     
     male_regs = sum(1 for r in registrations if r.gender == "Male")
     female_regs = sum(1 for r in registrations if r.gender == "Female")
+    online_regs = sum(1 for r in registrations if (r.attendance or "").strip().lower() == "online")
+    in_person_regs = total - online_regs
     whatsapp_added = sum(1 for r in registrations if r.whatsapp == "Added")
     
     # Compute department statistics
@@ -248,6 +250,8 @@ def get_dashboard_stats(db: Session = Depends(get_db)):
         "total_registrations": total,
         "male_registrations": male_regs,
         "female_registrations": female_regs,
+        "online_registrations": online_regs,
+        "in_person_registrations": in_person_regs,
         "added_to_whatsapp": whatsapp_added,
         "department_data": dept_data,
         "recent_registrations": recent_list,

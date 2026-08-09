@@ -21,6 +21,7 @@ class RegistrationAdminCreate(BaseModel):
     phone: str
     dept: str
     level: str
+    attendance: str = "In-Person"
     gender: str
     whatsapp: Optional[str] = "Not Added"
     reason: Optional[str] = "Registered via Admin console."
@@ -74,6 +75,8 @@ class DashboardStats(BaseModel):
     total_registrations: int
     male_registrations: int
     female_registrations: int
+    online_registrations: int
+    in_person_registrations: int
     added_to_whatsapp: int
     department_data: List[DeptStat]
     recent_registrations: List[RecentRegistration]

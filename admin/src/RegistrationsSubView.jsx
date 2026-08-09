@@ -20,6 +20,7 @@ function RegistrationsSubView() {
   const [newPhone, setNewPhone] = useState('');
   const [newDept, setNewDept] = useState('');
   const [newLevel, setNewLevel] = useState('300 Level');
+  const [newAttendance, setNewAttendance] = useState('In-Person');
   const [newGender, setNewGender] = useState('Male');
 
   // Delete Confirmation Modal State
@@ -31,6 +32,8 @@ function RegistrationsSubView() {
   // WhatsApp Re-send Modal State
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [whatsappAttendee, setWhatsappAttendee] = useState(null);
+  const [whatsappLink, setWhatsappLink] = useState('');
+  const [linkType, setLinkType] = useState('group');
 
   useEffect(() => {
     fetchRegistrations();
@@ -63,9 +66,23 @@ function RegistrationsSubView() {
 
 
 
-  const handleDirectOpenWhatsAppChat = async (reg) => {
+  const buildWhatsAppMessage = (reg, linkValue = '') => {
+    const baseMessage = `Hello ${reg.name},\n\nThis is the Students' Interactive Forum (SIF) Admin.\n\nWe are pleased to confirm that your registration for the Students' Interactive Summit 2.0 has been approved!\n\nThank you for registering.`;
+
+    if ((reg.attendance || '').toLowerCase() === 'online') {
+      if (linkType === 'group') {
+        return `${baseMessage}\n\nPlease join the official WhatsApp group here:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
+      }
+
+      return `${baseMessage}\n\nPlease use the event meeting link below:\n${linkValue || ''}\n\nWe look forward to seeing you there!`;
+    }
+
+    return `${baseMessage}\n\nPlease click the link below to join our official WhatsApp announcement group to receive further updates:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
+  };
+
+  const handleDirectOpenWhatsAppChat = async (reg, linkValue = '') => {
     const cleanedPhone = reg.phone.replace(/[^0-9]/g, '');
-    const message = `Hello ${reg.name},\n\nThis is the Students' Interactive Forum (SIF) Admin.\n\nWe are pleased to confirm that your registration for the Students' Interactive Summit 2.0 has been approved!\n\nPlease click the link below to join our official WhatsApp announcement group to receive further updates:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
+    const message = buildWhatsAppMessage(reg, linkValue);
     const encoded = encodeURIComponent(message);
     const whatsappLink = `https://wa.me/${cleanedPhone}?text=${encoded}`;
     
@@ -93,9 +110,19 @@ function RegistrationsSubView() {
   };
 
   const handleOpenWhatsAppChat = (reg) => {
+    if ((reg.attendance || '').toLowerCase() === 'online') {
+      setWhatsappAttendee(reg);
+      setIsWhatsAppModalOpen(true);
+      setWhatsappLink('');
+      setLinkType('group');
+      return;
+    }
+
     if (reg.whatsapp === 'Added') {
       setWhatsappAttendee(reg);
       setIsWhatsAppModalOpen(true);
+      setWhatsappLink('');
+      setLinkType('group');
     } else {
       handleDirectOpenWhatsAppChat(reg);
     }
@@ -167,6 +194,7 @@ function RegistrationsSubView() {
           phone: newPhone,
           dept: newDept,
           level: newLevel,
+          attendance: newAttendance,
           gender: newGender,
           whatsapp: 'Not Added',
           reason: 'Registered via Admin console.',
@@ -346,6 +374,7 @@ function RegistrationsSubView() {
                   <th className="py-3 px-4 text-left">Name</th>
                   <th className="py-3 px-4 text-left">Department</th>
                   <th className="py-3 px-4 text-left">Level</th>
+                  <th className="py-3 px-4 text-center">Attendance</th>
                   <th className="py-3 px-4 text-center">Gender</th>
                   <th className="py-3 px-4 text-left">Phone Number</th>
                   <th className="py-3 px-4 text-right">Actions</th>
@@ -383,6 +412,15 @@ function RegistrationsSubView() {
                       </td>
                       <td className="py-3.5 px-4 text-gray-500">{reg.dept}</td>
                       <td className="py-3.5 px-4 text-gray-500">{reg.level}</td>
+                      <td className="py-3.5 px-4 text-center">
+                        <span className={`inline-block px-2.5 py-0.5 text-xs font-bold rounded-full ${
+                          (reg.attendance || '').toLowerCase() === 'online'
+                            ? 'bg-purple-100 text-purple-700'
+                            : 'bg-amber-100 text-amber-700'
+                        }`}>
+                          {reg.attendance || 'In-Person'}
+                        </span>
+                      </td>
                       <td className="py-3.5 px-4 text-center">
                         <span className={`inline-block px-2.5 py-0.5 text-xs font-bold rounded-full ${
                           reg.gender === 'Male' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'
@@ -449,6 +487,10 @@ function RegistrationsSubView() {
                   <div className="flex items-center space-x-2.5">
                     <BookOpen className="w-4.5 h-4.5 text-gray-400 flex-shrink-0" />
                     <span>{selectedAttendee.dept} ({selectedAttendee.level})</span>
+                  </div>
+                  <div className="flex items-center space-x-2.5">
+                    <ShieldCheck className="w-4.5 h-4.5 text-gray-400 flex-shrink-0" />
+                    <span>Attendance: {selectedAttendee.attendance || 'In-Person'}</span>
                   </div>
                   <div className="flex items-center space-x-2.5">
                     <ShieldCheck className="w-4.5 h-4.5 text-gray-400 flex-shrink-0" />
@@ -574,16 +616,29 @@ function RegistrationsSubView() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-gray-700 text-xs font-bold mb-1.5">Gender</label>
-                <select
-                  value={newGender}
-                  onChange={(e) => setNewGender(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 text-xs font-bold mb-1.5">Attendance</label>
+                  <select
+                    value={newAttendance}
+                    onChange={(e) => setNewAttendance(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                  >
+                    <option value="In-Person">In-Person</option>
+                    <option value="Online">Online</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-gray-700 text-xs font-bold mb-1.5">Gender</label>
+                  <select
+                    value={newGender}
+                    onChange={(e) => setNewGender(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
               </div>
 
               <button
@@ -663,6 +718,28 @@ function RegistrationsSubView() {
                 <strong className="text-gray-800 font-bold">{whatsappAttendee.name}</strong> has already been marked as added to WhatsApp. 
                 Do you want to send the message again?
               </p>
+              {(whatsappAttendee?.attendance || '').toLowerCase() === 'online' && (
+                <div className="space-y-3">
+                  <label className="block text-xs font-bold text-gray-700">Choose the online link type</label>
+                  <select
+                    value={linkType}
+                    onChange={(e) => setLinkType(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm bg-white"
+                  >
+                    <option value="group">Group Link</option>
+                    <option value="event">Event Link</option>
+                  </select>
+                  {linkType === 'event' && (
+                    <input
+                      type="url"
+                      value={whatsappLink}
+                      onChange={(e) => setWhatsappLink(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                      placeholder="https://..."
+                    />
+                  )}
+                </div>
+              )}
               <div className="flex gap-3 justify-end pt-2">
                 <button
                   type="button"
@@ -674,9 +751,11 @@ function RegistrationsSubView() {
                 <button
                   type="button"
                   onClick={() => {
-                    handleDirectOpenWhatsAppChat(whatsappAttendee);
+                    handleDirectOpenWhatsAppChat(whatsappAttendee, whatsappLink);
                     setIsWhatsAppModalOpen(false);
                     setWhatsappAttendee(null);
+                    setWhatsappLink('');
+                    setLinkType('group');
                   }}
                   className="px-4 py-2 text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded transition shadow-sm"
                 >

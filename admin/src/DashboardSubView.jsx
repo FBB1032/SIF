@@ -16,12 +16,25 @@ function DashboardSubView({ setActiveTab }) {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_URL}/api/dashboard/stats`);
-      if (!response.ok) {
+      const [statsResponse, registrationsResponse] = await Promise.all([
+        fetch(`${API_URL}/api/dashboard/stats`),
+        fetch(`${API_URL}/api/registrations`),
+      ]);
+
+      if (!statsResponse.ok || !registrationsResponse.ok) {
         throw new Error('Failed to fetch dashboard stats');
       }
-      const json = await response.json();
-      setData(json);
+
+      const statsData = await statsResponse.json();
+      const registrations = await registrationsResponse.json();
+      const onlineRegistrations = registrations.filter((reg) => (reg.attendance || '').toLowerCase() === 'online').length;
+      const inPersonRegistrations = registrations.length - onlineRegistrations;
+
+      setData({
+        ...statsData,
+        online_registrations: onlineRegistrations,
+        in_person_registrations: inPersonRegistrations,
+      });
     } catch (err) {
       console.error(err);
       setError('Could not connect to the backend server.');
@@ -89,6 +102,21 @@ function DashboardSubView({ setActiveTab }) {
   ];
 
   const departmentData = data.department_data;
+  const attendanceBreakdown = [
+    {
+      label: 'Online',
+      value: data.online_registrations,
+      color: 'bg-purple-600',
+      textColor: 'text-purple-700'
+    },
+    {
+      label: 'On Campus',
+      value: data.in_person_registrations,
+      color: 'bg-amber-500',
+      textColor: 'text-amber-700'
+    }
+  ];
+  const attendanceTotal = data.online_registrations + data.in_person_registrations;
 
   // SVG Trend Chart dynamic calculation
   const trendPoints = data.trend_data;
@@ -148,6 +176,60 @@ function DashboardSubView({ setActiveTab }) {
 
       {/* Analytics Charts & Details */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Attendance Breakdown Pie Chart */}
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-left lg:col-span-1">
+          <h3 className="text-base font-bold text-gray-800 mb-6">Attendance Breakdown</h3>
+          <div className="flex flex-col items-center">
+            <div className="relative w-40 h-40">
+              <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" strokeWidth="14" />
+                {attendanceTotal > 0 ? (
+                  <>
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="#9333ea"
+                      strokeWidth="14"
+                      strokeLinecap="round"
+                      strokeDasharray={`${(data.online_registrations / attendanceTotal) * 251.2} 251.2`}
+                    />
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke="#f59e0b"
+                      strokeWidth="14"
+                      strokeLinecap="round"
+                      strokeDasharray={`${(data.in_person_registrations / attendanceTotal) * 251.2} 251.2`}
+                      strokeDashoffset={-((data.online_registrations / attendanceTotal) * 251.2)}
+                    />
+                  </>
+                ) : (
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" strokeWidth="14" />
+                )}
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span className="text-2xl font-extrabold text-gray-800">{attendanceTotal}</span>
+                <span className="text-xs font-semibold text-gray-500">Total</span>
+              </div>
+            </div>
+            <div className="mt-4 w-full space-y-3">
+              {attendanceBreakdown.map((item) => (
+                <div key={item.label} className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-3 h-3 rounded-full ${item.color}`} />
+                    <span className="text-gray-600">{item.label}</span>
+                  </div>
+                  <span className={`font-semibold ${item.textColor}`}>{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Registrations Trend Chart */}
         <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm lg:col-span-2 text-left">
           <h3 className="text-base font-bold text-gray-800 mb-6">Registrations Over Time</h3>

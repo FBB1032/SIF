@@ -12,6 +12,7 @@ function RegisterTab() {
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [submissionStatus, setSubmissionStatus] = useState('idle'); // 'idle' | 'success' | 'error'
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const phoneStartsWithZero = phone.trim().startsWith('0');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,13 @@ function RegisterTab() {
     if (!name || !email || !dept || !level || !phone) {
       setSubmissionStatus('error');
       setSubmissionMessage('Please fill in all required fields.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (phoneStartsWithZero) {
+      setSubmissionStatus('error');
+      setSubmissionMessage('Invalid phone number. Remove the first 0 and enter your number after +234.');
       setIsSubmitting(false);
       return;
     }
@@ -152,15 +160,25 @@ function RegisterTab() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                   <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
-                    placeholder="+234..."
-                    required
-                  />
+                  <div className="flex items-stretch overflow-hidden rounded border border-gray-300 focus-within:ring-2 focus-within:ring-green-500 focus-within:border-transparent">
+                    <span className="flex items-center bg-gray-100 px-3 text-sm font-semibold text-gray-700">+234</span>
+                    <input
+                      type="tel"
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full px-4 py-2 outline-none text-sm"
+                      placeholder="Enter number without leading 0"
+                      required
+                    />
+                  </div>
+                  {phoneStartsWithZero && (
+                    <div className="mt-2 rounded-md border border-red-200 bg-red-50 px-3 py-2">
+                      <p className="text-sm font-semibold text-red-600">
+                        Invalid phone number. Remove the first 0.
+                      </p>
+                    </div>
+                  )}
                   <div className="mt-2 rounded-md border border-red-200 bg-red-50 px-3 py-2">
                     <p className="text-sm font-semibold text-red-600">
                       Please register with your WhatsApp number.

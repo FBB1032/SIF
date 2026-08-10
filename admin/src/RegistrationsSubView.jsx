@@ -71,13 +71,13 @@ function RegistrationsSubView() {
 
     if ((reg.attendance || '').toLowerCase() === 'online') {
       if (linkType === 'group') {
-        return `${baseMessage}\n\nPlease join the official WhatsApp group here:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
+        return `${baseMessage}\n\nPlease join the official WhatsApp group here:\nhttps://chat.whatsapp.com/KvnzI6aYcFKLekyvpkJ1Xg?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
       }
 
       return `${baseMessage}\n\nPlease use the event meeting link below:\n${linkValue || ''}\n\nWe look forward to seeing you there!`;
     }
 
-    return `${baseMessage}\n\nPlease click the link below to join our official WhatsApp announcement group to receive further updates:\nhttps://chat.whatsapp.com/LvOCpBaU8EK02XjsAXqKOB?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
+    return `${baseMessage}\n\nPlease click the link below to join our official WhatsApp announcement group to receive further updates:\nhttps://chat.whatsapp.com/KvnzI6aYcFKLekyvpkJ1Xg?s=cl&p=a&ilr=0\n\nWe look forward to seeing you there!`;
   };
 
   const handleDirectOpenWhatsAppChat = async (reg, linkValue = '') => {

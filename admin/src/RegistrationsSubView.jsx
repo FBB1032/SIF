@@ -35,6 +35,9 @@ function RegistrationsSubView() {
   const [whatsappLink, setWhatsappLink] = useState('');
   const [linkType, setLinkType] = useState('group');
 
+  // Show all / show first 10
+  const [showAll, setShowAll] = useState(false);
+
   useEffect(() => {
     fetchRegistrations();
   }, []);
@@ -62,7 +65,7 @@ function RegistrationsSubView() {
     }
   };
 
-  const handleSearch = (e) => setSearchTerm(e.target.value);
+  const handleSearch = (e) => { setSearchTerm(e.target.value); setShowAll(false); };
 
 
 
@@ -251,8 +254,8 @@ function RegistrationsSubView() {
     // CSV headers
     const headers = ['Registration ID', 'Full Name', 'Email', 'Phone Number', 'Department/Faculty', 'Level', 'Attendance Type', 'WhatsApp Status', 'Gender', 'Registration Date'];
     
-    // Map registrations data rows (using filteredData so it matches current view filters)
-    const rows = filteredData.map(reg => [
+    // Map registrations data rows — reversed so oldest (#1) is first, newest is last
+    const rows = [...filteredData].reverse().map(reg => [
       escapeCSV(formatRegId(reg.id)),
       escapeCSV(reg.name),
       escapeCSV(reg.email),
@@ -291,6 +294,9 @@ function RegistrationsSubView() {
   });
 
   const departments = ['All', ...new Set(registrations.map(r => r.dept))];
+
+  const PAGE_SIZE = 10;
+  const visibleData = showAll ? filteredData : filteredData.slice(0, PAGE_SIZE);
 
   return (
     <div className="space-y-6">
@@ -342,7 +348,7 @@ function RegistrationsSubView() {
           {/* Gender */}
           <select
             value={genderFilter}
-            onChange={(e) => setGenderFilter(e.target.value)}
+            onChange={(e) => { setGenderFilter(e.target.value); setShowAll(false); }}
             className="px-3 py-1.5 border border-gray-300 rounded bg-white text-xs focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             <option value="All">All Genders</option>
@@ -353,7 +359,7 @@ function RegistrationsSubView() {
           {/* Department */}
           <select
             value={deptFilter}
-            onChange={(e) => setDeptFilter(e.target.value)}
+            onChange={(e) => { setDeptFilter(e.target.value); setShowAll(false); }}
             className="px-3 py-1.5 border border-gray-300 rounded bg-white text-xs focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             {departments.map((dept, idx) => (
@@ -367,10 +373,22 @@ function RegistrationsSubView() {
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
         {/* Table Panel */}
         <div className="xl:col-span-8 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden text-left">
+          {/* Legend */}
+          <div className="px-4 pt-3 pb-0 flex items-center gap-4 text-xs text-gray-500">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500"></span>
+              <span className="text-green-700 font-semibold">Green name</span> = not yet added to WhatsApp
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block w-2.5 h-2.5 rounded-full bg-gray-400"></span>
+              Normal = already added
+            </span>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-100 text-gray-500 font-bold text-xs uppercase">
                 <tr>
+                  <th className="py-3 px-4 text-left w-10">#</th>
                   <th className="py-3 px-4 text-left">Name</th>
                   <th className="py-3 px-4 text-left">Department</th>
                   <th className="py-3 px-4 text-left">Level</th>
@@ -383,18 +401,20 @@ function RegistrationsSubView() {
               <tbody className="divide-y divide-gray-100">
                 {loading ? (
                   <tr>
-                    <td colSpan="6" className="py-8 text-center text-green-700 font-medium">Loading registrations from database...</td>
+                    <td colSpan="8" className="py-8 text-center text-green-700 font-medium">Loading registrations from database...</td>
                   </tr>
                 ) : error ? (
                   <tr>
-                    <td colSpan="6" className="py-8 text-center text-red-500 font-medium">{error}</td>
+                    <td colSpan="8" className="py-8 text-center text-red-500 font-medium">{error}</td>
                   </tr>
                 ) : filteredData.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="py-8 text-center text-gray-400 font-medium">No registrations found matching the filters.</td>
+                    <td colSpan="8" className="py-8 text-center text-gray-400 font-medium">No registrations found matching the filters.</td>
                   </tr>
                 ) : (
-                  filteredData.map((reg) => (
+                  visibleData.map((reg) => {
+                    const rowNumber = registrations.length - registrations.indexOf(reg);
+                    return (
                     <tr
                       key={reg.id}
                       onClick={() => setSelectedAttendee(reg)}
@@ -404,9 +424,12 @@ function RegistrationsSubView() {
                           : 'hover:bg-gray-50'
                       }`}
                     >
-                      <td className="py-3.5 px-4 font-semibold text-gray-800">
+                      <td className="py-3.5 px-4 text-xs text-gray-400 font-medium">{rowNumber}</td>
+                      <td className="py-3.5 px-4 font-semibold">
                         <div>
-                          <span>{reg.name}</span>
+                          <span className={reg.whatsapp !== 'Added' ? 'text-green-600' : 'text-gray-800'}>
+                            {reg.name}
+                          </span>
                           <span className="text-[10px] text-gray-400 block font-normal mt-0.5">{reg.email}</span>
                         </div>
                       </td>
@@ -448,11 +471,25 @@ function RegistrationsSubView() {
                         </div>
                       </td>
                     </tr>
-                  ))
+                  );})
                 )}
               </tbody>
             </table>
           </div>
+          {/* See All / Show Less footer */}
+          {!loading && !error && filteredData.length > PAGE_SIZE && (
+            <div className="border-t border-gray-100 px-4 py-3 flex items-center justify-between bg-gray-50/60">
+              <span className="text-xs text-gray-500">
+                Showing <strong>{visibleData.length}</strong> of <strong>{filteredData.length}</strong> registrations
+              </span>
+              <button
+                onClick={() => setShowAll(prev => !prev)}
+                className="text-xs font-bold text-green-700 hover:text-green-800 hover:underline transition"
+              >
+                {showAll ? 'Show Less ↑' : `See All (${filteredData.length}) ↓`}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Details Card Panel */}

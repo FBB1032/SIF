@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, XCircle } from 'lucide-react';
+
+// Set to true to re-open registration, false to close it
+const REGISTRATION_OPEN = false;
 
 function RegisterTab() {
   const [name, setName] = useState('');
@@ -95,6 +98,7 @@ function RegisterTab() {
         </div>
       </div>
 
+      {REGISTRATION_OPEN ? (
       <div className="container mx-auto px-4 py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
           {/* Left Form */}
@@ -269,6 +273,20 @@ function RegisterTab() {
           </div>
         </div>
       </div>
+      ) : (
+        <div className="container mx-auto px-4 py-20 flex flex-col items-center justify-center text-center">
+          <div className="bg-red-600 text-white rounded-2xl shadow-xl px-10 py-14 max-w-xl w-full flex flex-col items-center gap-5">
+            <XCircle className="w-16 h-16 text-white opacity-90" />
+            <h2 className="text-3xl font-extrabold">Registration Closed</h2>
+            <p className="text-red-100 text-base font-medium leading-relaxed">
+              We've reached maximum capacity. Registration is no longer available for the Students' Interactive Summit 2.0.
+            </p>
+            <p className="text-red-200 text-sm">
+              Thank you for your interest. Stay connected for future events.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
